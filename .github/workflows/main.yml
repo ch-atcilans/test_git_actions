@@ -8,14 +8,24 @@ jobs:
   comment-with-action:
     runs-on: ubuntu-latest
     steps:
-      - name: "dump github context"
-        run: echo '${{ toJSON(github.event) }}' | jq 
+      - name: Dump GitHub context
+        run: echo '${{ toJSON(github.event) }}'
 
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v1 
+      - name: Create Comment
+        uses: actions/github-script@v4
         with:
-          issue-number: ${{ github.event.issue.number }} 
-          body: |
-            This is a multi-line test comment
-            With GitHub **Markdown** :sparkles:
-            Created by [create-or-update-comment] [1]
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const commentBody = `This is a multi-line test comment.\n\nWith GitHub **Markdown** :sparkles:\n\nCreated by [create-or-update-comment] [1]`;
+
+            const createComment = async () => {
+              await github.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: commentBody
+              });
+            };
+
+            await createComment();
