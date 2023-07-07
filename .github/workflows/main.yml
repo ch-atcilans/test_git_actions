@@ -5,17 +5,18 @@ on:
     types: [opened]
 
 jobs:
-  comment:
+  comment-with-action:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: "dump github context"
+        run: echo '${{ toJSON (github.event) }}' | jq 
+      shell: bash
 
-      - name: Comment on Issue
-        uses: actions/github-script@v4
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1 
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { owner, repo, number } = context.issue;
-            const comment = 'Hello! This is a test comment.';
-            github.issues.createComment({ owner, repo, issue_number: number, body: comment });
+          issue-number: ${{ github.event.issue.number }} 
+          body: |
+            This is a multi-line test comment
+            With GitHub **Markdown** :sparkles:
+            Created by [create-or-update-comment] [1]
