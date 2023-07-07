@@ -1,8 +1,8 @@
 name: Comment on Issues
 
 on:
-  pull_request:
-    types: [opened]
+  issues:
+    types: [opened, reopened, closed]
 
 jobs:
   comment:
