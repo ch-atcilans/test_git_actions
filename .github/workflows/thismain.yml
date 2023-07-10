@@ -18,6 +18,6 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker build -t chtrivedi/tmp_try:${{ github.sha }} .
+          docker build -t chtrivedi/tmp_try:"abc.com" .
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker push chtrivedi/tmp_try:${{ github.sha }}
