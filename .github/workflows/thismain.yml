@@ -20,4 +20,4 @@ jobs:
         run: |
           docker build -t chtrivedi/tmp_try:"abc.com" .
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push chtrivedi/tmp_try:${{ github.sha }}
+          docker push chtrivedi/tmp_try:"abc.com"
