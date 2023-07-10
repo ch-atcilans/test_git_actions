@@ -1,23 +1,23 @@
 name: Docker Build and Push
 
 on:
-  pull_request:
-    types:
-      - closed
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+  build-and-push:
+    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Build and Push Docker Image
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          docker build -t your-dockerhub-username/image-name:${{ github.sha }} .
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push your-dockerhub-username/image-name:${{ github.sha }}
+      - name: Build and Push Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker build -t chtrivedi/tmp_try:${{ github.sha }} .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push chtrivedi/tmp_try:${{ github.sha }}
